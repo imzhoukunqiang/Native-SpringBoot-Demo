@@ -14,11 +14,6 @@ public class DemoApplication implements CommandLineRunner {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(DemoApplication.class);
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
 		// 获取所有环境变量
 		Map<String, String> envVariables = System.getenv();
 		for (Map.Entry<String, String> entry : envVariables.entrySet()) {
@@ -31,10 +26,6 @@ public class DemoApplication implements CommandLineRunner {
 		String path = System.getenv("PATH");
 		LOGGER.info("======================");
 		LOGGER.info("======================");
-		LOGGER.info("PATH:");
-		for (String s : path.split(";")) {
-			LOGGER.info("\t" + s);
-		}
 		LOGGER.info("======================");
 		LOGGER.info("======================");
 
@@ -42,6 +33,12 @@ public class DemoApplication implements CommandLineRunner {
 		properties.forEach((k, v) -> {
 			LOGGER.info(k + " = " + v);
 		});
+
+		SpringApplication.run(DemoApplication.class, args);
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
 
 
 	}
