@@ -22,10 +22,10 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-      # In this step, this action saves a list of existing images,
-      # the cache is created without them in the post run.
-      # It also restores the cache if it exists.
-    - uses: satackey/action-docker-layer-caching@v0.0.11
+    # In this step, this action saves a list of existing images,
+    # the cache is created without them in the post run.
+    # It also restores the cache if it exists.
+    - uses: jpribyl/action-docker-layer-caching@v0.1.1
       # Ignore the failure of a step and avoid terminating the job.
       continue-on-error: true
 
@@ -47,12 +47,12 @@ jobs:
         password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Set VERSION environment variable
       run: |
-        echo "::set-output name=VERSION::$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)"
+        echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
 
     - name: Build with Maven & push to docker hub
       run: |
         mvn -DskipTests=true spring-boot:build-image
-        docker tag spring-boot-native:${{ steps.datetime.outputs.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
+        docker tag spring-boot-native:${{ evn.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ steps.datetime.outputs.VERSION }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ evn.VERSION }}
 
