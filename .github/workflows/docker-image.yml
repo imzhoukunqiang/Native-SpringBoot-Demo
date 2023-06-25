@@ -52,7 +52,8 @@ jobs:
     - name: Build with Maven & push to docker hub
       run: |
         mvn -DskipTests=true spring-boot:build-image
-        docker tag spring-boot-native:${{ env.VERSION }} zhoukq/spring-boot-native:latest
-        docker push zhoukq/spring-boot-native:latest
-        docker push zhoukq/spring-boot-native:${{ env.VERSION }}
+        docker tag spring-boot-native:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
+        docker tag spring-boot-native:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ env.VERSION }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ env.VERSION }}
 
