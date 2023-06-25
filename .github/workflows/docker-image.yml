@@ -54,5 +54,5 @@ jobs:
         mvn -DskipTests=true spring-boot:build-image
         docker tag spring-boot-native:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ evn.VERSION }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ env.VERSION }}
 
