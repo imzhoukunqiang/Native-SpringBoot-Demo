@@ -20,8 +20,9 @@ jobs:
     - name: GitHub Action for GraalVM
       uses: graalvm/setup-graalvm@v1
       with:
-        java-version: '17.0.7'
-        distribution: 'graalvm-community' # See 'Options' for all available distributions
+        version: '22.3.2' # GraalVM version
+        java-version: '17'
+        components: 'native-image'
         cache: 'maven'
     - name: Echo environment
       run: |
