@@ -1,0 +1,44 @@
+name: Spring Boot(Native Image arm64)
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: pguyot/arm-runner-action@v2
+      with:
+        commands: |
+            commands to run tests
+    - uses: graalvm/setup-graalvm@v1
+      with:
+        java-version: '17.0.7'
+        distribution: 'graalvm' # See 'Options' for all available distributions
+        cache: 'maven'
+    - name: Example step
+      run: |
+        echo "GRAALVM_HOME: $GRAALVM_HOME"
+        echo "JAVA_HOME: $JAVA_HOME"
+        java --version
+        native-image --version
+        mvn --version
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Set VERSION environment variable
+      run: |
+        echo "VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
+#     - name: Build with Maven & push to docker hub
+#       run: |
+#         mvn -DskipTests=true -Pnative spring-boot:build-image
+#         docker tag spring-boot-native:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
+#         docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:latest
+#         docker tag spring-boot-native:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ env.VERSION }}
+#         docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-boot-native:${{ env.VERSION }}
