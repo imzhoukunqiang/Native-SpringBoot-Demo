@@ -39,8 +39,8 @@ jobs:
     - name: Build with Maven & push to docker hub
       run: |
         mvn -DskipTests=true -Pnative spring-boot:build-image
-        docker tag $IMAGE_NAME:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:native-latest
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:native-latest
-        docker tag $IMAGE_NAME:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:native-${{ env.VERSION }}
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/$IMAGE_NAME:native-${{ env.VERSION }}
+        docker tag ${{ env.IMAGE_NAME }}:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:native-latest
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:native-latest
+        docker tag ${{ env.IMAGE_NAME }}:${{ env.VERSION }} ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:native-${{ env.VERSION }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:native-${{ env.VERSION }}
 
