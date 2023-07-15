@@ -16,9 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: graalvm/setup-graalvm@v1
+
+    - name: GitHub Action for GraalVM
+      uses: graalvm/setup-graalvm@v1
       with:
         java-version: '17.0.7'
+        version: '22.3.2' # Old 'version' option for the GraalVM version
         distribution: 'graalvm' # See 'Options' for all available distributions
         cache: 'maven'
     - name: Echo environment
