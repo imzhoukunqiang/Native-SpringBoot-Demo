@@ -39,6 +39,9 @@
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
+                <configuration>
+                    <buildArgs>-march=compatibility</buildArgs>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -47,30 +50,30 @@
         </plugins>
     </build>
 
-<!--
-    <profiles>
-        <profile>
-            <id>amd64</id>
-            <activation>
-                <os>
-                    <arch>amd64</arch>
-                </os>
-            </activation>
-            <properties>
-                <spring-boot-maven-plugin.builder>paketobuildpacks/builder:tiny</spring-boot-maven-plugin.builder>
-            </properties>
-        </profile>
-        <profile>
-            <id>aarch64</id>
-            <activation>
-                <os>
-                    <arch>aarch64</arch>
-                </os>
-            </activation>
-            <properties>
-                <spring-boot-maven-plugin.builder>dashaun/builder:tiny</spring-boot-maven-plugin.builder>
-            </properties>
-        </profile>
-    </profiles>
--->
+    <!--
+        <profiles>
+            <profile>
+                <id>amd64</id>
+                <activation>
+                    <os>
+                        <arch>amd64</arch>
+                    </os>
+                </activation>
+                <properties>
+                    <spring-boot-maven-plugin.builder>paketobuildpacks/builder:tiny</spring-boot-maven-plugin.builder>
+                </properties>
+            </profile>
+            <profile>
+                <id>aarch64</id>
+                <activation>
+                    <os>
+                        <arch>aarch64</arch>
+                    </os>
+                </activation>
+                <properties>
+                    <spring-boot-maven-plugin.builder>dashaun/builder:tiny</spring-boot-maven-plugin.builder>
+                </properties>
+            </profile>
+        </profiles>
+    -->
 </project>
