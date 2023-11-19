@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.7</version>
+        <version>3.0.12</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
@@ -50,30 +50,30 @@
         </plugins>
     </build>
 
-    <!--
-        <profiles>
-            <profile>
-                <id>amd64</id>
-                <activation>
-                    <os>
-                        <arch>amd64</arch>
-                    </os>
-                </activation>
-                <properties>
-                    <spring-boot-maven-plugin.builder>paketobuildpacks/builder:tiny</spring-boot-maven-plugin.builder>
-                </properties>
-            </profile>
-            <profile>
-                <id>aarch64</id>
-                <activation>
-                    <os>
-                        <arch>aarch64</arch>
-                    </os>
-                </activation>
-                <properties>
-                    <spring-boot-maven-plugin.builder>dashaun/builder:tiny</spring-boot-maven-plugin.builder>
-                </properties>
-            </profile>
-        </profiles>
-    -->
+    <profiles>
+        <profile>
+            <id>native</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <configuration>
+                            <image>
+                                <env>
+                                    <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                                    <BP_NATIVE_IMAGE_BUILD_ARGUMENTS>-march=compatibility</BP_NATIVE_IMAGE_BUILD_ARGUMENTS>
+                                    <BPE_APPEND_JAVA_TOOL_OPTIONS>-Dfile.encoding=UTF-8</BPE_APPEND_JAVA_TOOL_OPTIONS>
+                                </env>
+                                <name>${project.artifactId}:${project.version}</name>
+                            </image>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+
 </project>
